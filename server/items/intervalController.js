@@ -1,12 +1,16 @@
 var app = require('../../server/server.js');
-var socketServer = require('http').createServer(app);
-var io = require('socket.io')(socketServer);
+//var socketServer = require('http').createServer(app);
+//var io = require('socket.io')(socketServer);
+var moment = require('moment');
+var itemStorage = require('./itemStorage.js');
+
 
 module.exports = {
-	    //setInterval fo make call to db to update price
-        findTimeReduce : function (currentPrice, minPrice, endDate) {
-            endDate = endDate || 7;
-            var sec = ((endDate * 24)*60*60);
+        findTimeReduce : function (itemId, currentPrice, minPrice, endDate) {
+            var startPrice = currentPrice;
+            var now = moment().valueOf();
+            endDate = moment('2016-01-20 17').valueOf();
+            var millisecondsUntil = Math.abs(now - endDate);
             var count = 0;
             var amountToDecrease = currentPrice/minPrice;
             var results = [];
@@ -16,19 +20,31 @@ module.exports = {
                 count++;
             }
 
-            var numberOfSecUntilDecrment = sec/count;
+            var numberOfSecUntilDecrment = millisecondsUntil/count;
             var priceIndex = 0;
             var timeoutId;
-            
+            results.push(minPrice);
             var recurse = function() {
-                if(priceIndex < results.length - 1){
+                var rightNow = moment().valueOf();
+                if(rightNow > endDate.valueOf()){
+                    itemStorage.storage[itemId].active = false;
+                }
+            
+                if(priceIndex < results.length){
                     priceIndex++;
+                    startPrice = results[priceIndex];
                     //current price in database update
                     //make 'POST' to update price
 
-                    timeoutId = setTimeout(recurse, numberOfSecUntilDecrment);
                 }
-            }
-            setTimeout(recurse, numberOfSecUntilDecrment);
+                console.log('recurse', startPrice);
+                if(itemStorage.storage[itemId].price){ 
+                   itemStorage.storage[itemId].price = startPrice;
+                }
+                console.log('item storage', itemStorage);
+
+            };
+            return { timeId:setInterval(recurse, 10000), price: startPrice };
+
         }
 };
