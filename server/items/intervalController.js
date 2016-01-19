@@ -1,12 +1,8 @@
 var app = require('../../server/server.js');
-<<<<<<< 39384697c5c16852ce779b89df947a7b99cbd579
 var socketServer = require('http').createServer(app);
 var io = require('socket.io')(socketServer);
 var moment = require('moment');
-=======
-// var socketServer = require('http').createServer(app);
-// var io = require('socket.io')(socketServer);
->>>>>>> [feat]: add buyItem and buyItem route
+
 
 module.exports = {
 	    //setInterval fo make call to db to update price
