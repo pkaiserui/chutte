@@ -1,17 +1,14 @@
-import React, {Component} from 'react';
-import Navbar from '../components/navbar';
-import HomeJumbo from '../components/homeJumbotron';
+import React, {PropTypes} from 'react';
 import DevTools from './devTools';
 
 
-export default class App extends Component {
+export default class App extends React.Component {
   render() {
     return (
       <div>
-        <Navbar/>
-        <HomeJumbo/>
+        {this.props.children}
         <DevTools/>
-      </div>
+       </div>
     )
   }
 }

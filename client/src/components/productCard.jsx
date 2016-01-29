@@ -1,29 +1,42 @@
 import React from 'react';
+import {Link} from 'react-router';
 import ProductImage from './productImage';
+import Timer from './timer';
 import BuyButton from './buyButton';
 
 class ProductCard extends React.Component {
   render() {
+    let secondsRemaining = this.props.productDetail.timeRemaining || 1200;
+
     return (
-      <div>
-        <ProductImage/>
-        <div className="productBio">
-          <p>{this.props.productBio}</p>
+      <div className="col-md-4 portfolio-item">
+      <div className="productCard" id={this.props.productDetail._id}>
+        <div className="productName">
+          <Link to={`browse/product/${this.props.productDetail._id}`}> {this.props.productDetail.productName} </Link>
         </div>
 
-        <div className="productTime">
-          {this.props.productTime}
-        </div>
-        
-        <div className="productQuantity">
-          {this.props.productQuantity}
-        </div> 
+        <ProductImage className="productImage" image={this.props.productDetail.image}/>
 
-        <div className="productPrice">
-          {this.props.productPrice}
-        </div>
+        <row>
+          <div className="productTime">
+            <Timer secondsRemaining={secondsRemaining}/>
+          </div>
 
-        <BuyButton />
+          <div className="productQuantity">
+            <p className="productinfo">Quantity: {this.props.productDetail.quantity}</p>
+          </div>
+
+          <div className="productPrice">
+            <p className="productinfo">Price: ${this.props.productDetail.price}</p>
+          </div>
+        </row>
+        <row>
+        <div className="text-center">
+        <Link to={`browse/product/${this.props.productDetail._id}`}><button type="button" className="btn btn-primary center-block"><h5>Buy Now</h5></button></Link>
+        </div>
+        </row>
+
+      </div>
       </div>
     );
   }

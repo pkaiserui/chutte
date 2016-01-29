@@ -1,5 +1,7 @@
-var app = require('./../server.js');
-var socketServer = require('http')(app);
-var io = require('socket.io')(socketServer);
-var interval = require('./../items/intervalController');
-var Q = require('q');
+module.exports = {
+    socket: function(socket) {
+        socket.setMaxListeners(20);
+        console.log('a user connected');
+
+    }
+};

@@ -1,14 +1,20 @@
 import React from 'react';
-import NavBar from './../components/navbar';
-import JumboTronButton from './../components/homeJumbotron';
+import HomeNavBar from './../components/homenavbar';
+import JumboTronButton from './../components/JumboTronButton';
+import DashboardTiles from './../components/dashboardTiles';
 
-class HomePage extends React.Component {
+export default class Home extends React.Component {
   render() {
     return (
-      <NavBar/>
-      <JumboTronButton/>
+        <div>
+      <div className="full">
+        <HomeNavBar/>
+        <JumboTronButton/>
+      </div>
+      <div className="homeInfo">
+      <DashboardTiles/>
+      </div>
+      </div>
     )
   }
 };
-
-ReactDOM.render(<HomePage/>, document.getElementById('app'));
