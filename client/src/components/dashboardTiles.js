@@ -6,7 +6,6 @@ class DashBoardTile extends React.Component {
       <div className="container-fluid">
         <div id="infoHeader">
         Why Chutte?
-        <h3>Because we do it better.</h3>
         </div>
         <div className="col-lg-4 col-md-6 col-sm-12 col-xs-12">
           <div className="panel panel-primary">
